@@ -17,7 +17,46 @@ mongoose
   })
   .then(() => {
     // Run your code here, after you have insured that the connection was made
+    const newRecipe = {
+      title: 'Chicken Curry',
+      level: 'UltraPro Chef',
+      ingredients: ['chicken', 'onion', 'tomato', 'garlic', 'ginger', 'chicken masala', 'chilli', 'salt'],
+      cuisine: 'Indian',
+      dishType: 'main_course',
+      image: 'image/30-minute-chicken-curry-4376297.jpg',
+      duration: 60,
+      creator: 'Meena and Anastasiia',
+      created: 17082023
+    }
+    return Recipe.create(newRecipe);
+  })
+  .then (() => {
+    return Recipe.insertMany(data)
+  })
+  .then(recipes=>{
+    console.log('Inserted recipes:')
+    recipes.forEach(recipe => {
+      console.log(recipe.title)
+    });
+  })
+  .then(() => {
+    return Recipe.findOneAndUpdate(
+      { title: 'Rigatoni alla Genovese'},
+      { duration: 100}
+      
+    )
+  })
+  .then(()=> {
+    console.log('Updated duration of Rigatoni alla Genovese')
+    return Recipe.findOneAndDelete({title: 'Carrot Cake'})
+  })
+  .then(()=> {
+    console.log('Removed Carrot Cake recipe')
+    mongoose.connection.close()
   })
   .catch(error => {
     console.error('Error connecting to the database', error);
   });
+
+
+ 
